@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="samplerPage">
     <Sampler/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import Sampler from '@/components/Sampler.vue'
 
 export default {
-  name: 'home',
+  name: 'SamplerPage',
   components: {
     Sampler
   }
