@@ -2,12 +2,35 @@
   <v-app>
     <v-content>
       <router-view></router-view>
+      <v-bottom-navigation grow v-model="bottomNav">
+        <v-btn value="sampler" to="/">
+          <span>Sampler</span>
+          <v-icon>mdi-history</v-icon>
+        </v-btn>
+        <v-btn value="recorder" to="/recorder">
+          <span>Recorder</span>
+          <v-icon>mdi-heart</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
     </v-content>
   </v-app>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      bottomNav: 'sampler'
+    }
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.v-bottom-navigation {
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+}
+</style>
