@@ -1,9 +1,7 @@
 <template>
-  <v-app>
-    <v-content>
-      <router-view></router-view>
-    </v-content>
-  </v-app>
+  <ion-app>
+    <ion-vue-router />
+  </ion-app>
 </template>
 
 <script>

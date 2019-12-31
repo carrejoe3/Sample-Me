@@ -1,19 +1,15 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { IonicVueRouter } from '@ionic/vue'
 import Home from '../views/Home.vue'
 
-Vue.use(VueRouter)
+Vue.use(IonicVueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  }
-]
-
-const router = new VueRouter({
-  routes
+export default new IonicVueRouter({
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    }
+  ]
 })
-
-export default router
