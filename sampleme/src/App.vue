@@ -5,11 +5,11 @@
       <v-bottom-navigation grow v-model="bottomNav">
         <v-btn value="sampler" to="/">
           <span>Sampler</span>
-          <v-icon>mdi-history</v-icon>
+          <v-icon>mdi-grid</v-icon>
         </v-btn>
         <v-btn value="recorder" to="/recorder">
           <span>Recorder</span>
-          <v-icon>mdi-heart</v-icon>
+          <v-icon>mdi-microphone</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-content>
