@@ -46,8 +46,14 @@ export default {
 <style lang="scss" scoped>
 .recorder {
   text-align: center;
+  .vue-audio-recorder {
+    margin-top: 3%;
+  }
   .recordedAudio {
-    margin-top: 5%;
+    margin-top: 3%;
+    audio {
+      width: 80%;
+    }
     .recordedItem {
       display: flex;
       justify-content: space-around;
