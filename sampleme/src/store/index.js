@@ -5,14 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    recordMode: 'hold'
+    recordMode: 'hold',
+    recordings: []
   },
   mutations: {
     updateRecordMode (state, mode) {
       state.recordMode = mode
+    },
+    addRecording (state, recording) {
+      state.recordings.push(recording)
+    },
+    removeRecording (state, index) {
+      state.recordings.splice(index, 1)
     }
   },
-  actions: {
+  getters: {
   },
   modules: {
   }

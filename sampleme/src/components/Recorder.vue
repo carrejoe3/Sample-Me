@@ -11,25 +11,34 @@
 </template>
 
 <script>
+
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Recorder',
   data: () => ({
     recordMode: 'hold',
-    recordModeOptions: ['hold', 'press'],
-    recordings: []
+    recordModeOptions: ['hold', 'press']
   }),
+  computed: {
+    recordings () {
+      return this.$store.state.recordings
+    }
+  },
   methods: {
     removeRecord (index) {
-      this.recordings.splice(index, 1)
+      this.removeRecording(index)
     },
     onStream (stream) {
       console.log('Got a stream object:', stream)
     },
     onResult (data) {
-      this.recordings.push({
-        src: window.URL.createObjectURL(data)
-      })
-    }
+      this.addRecording({ src: window.URL.createObjectURL(data) })
+    },
+    ...mapMutations([
+      'addRecording',
+      'removeRecording'
+    ])
   }
 }
 </script>
@@ -43,6 +52,7 @@ export default {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      margin-bottom: 2%;
     }
   }
 }
