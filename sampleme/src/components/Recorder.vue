@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="recorder">
     <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" />
-    <div class="recorded-audio">
-      <div v-for="(record, index) in recordings" :key="index" class="recorded-item">
-        <div class="audio-container"><audio :src="record.src" controls /></div>
-        <div><button @click="removeRecord(index)" class="button is-dark">delete</button></div>
+    <div class="recordedAudio">
+      <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
+        <audio :src="record.src" controls/>
+        <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
       </div>
     </div>
   </v-container>
@@ -35,7 +35,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modeDropdownContainer {
-  display: flex;
+.recorder {
+  text-align: center;
+  .recordedAudio {
+    margin-top: 5%;
+    .recordedItem {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
 }
 </style>
