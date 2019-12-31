@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    recordMode: 'hold'
   },
   mutations: {
+    updateRecordMode (state, mode) {
+      state.recordMode = mode
+    }
   },
   actions: {
   },

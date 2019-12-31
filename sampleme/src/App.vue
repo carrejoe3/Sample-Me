@@ -11,6 +11,10 @@
           <span>Recorder</span>
           <v-icon>mdi-microphone</v-icon>
         </v-btn>
+        <v-btn value="settings" to="/settings">
+          <span>Settings</span>
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
       </v-bottom-navigation>
     </v-content>
   </v-app>
