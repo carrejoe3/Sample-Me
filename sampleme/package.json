@@ -9,7 +9,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "cordova-plugin-media-capture": "^3.0.3",
     "core-js": "^3.4.4",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
