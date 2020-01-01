@@ -1,6 +1,5 @@
 <template>
   <v-container class="recorder">
-    <!-- <v-btn @click="captureAudio">Record</v-btn> -->
     <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" />
     <div class="recordedAudio">
       <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
@@ -14,7 +13,7 @@
 <script>
 
 import { mapMutations } from 'vuex'
-import { MediaCapture } from '@ionic-native/media-capture'
+import { Capacitor, Plugins, FilesystemDirectory } from '@capacitor/core'
 
 export default {
   name: 'Recorder',
@@ -32,21 +31,53 @@ export default {
       'addRecording',
       'removeRecording'
     ]),
-    captureAudio () {
-      MediaCapture.captureAudio().then(res => {
-        this.storeAudioFile(res)
-      })
-    },
-    storeAudioFile (file) {
+    async storeAudioFile (file, name) {
+      console.log(file)
+      const { Filesystem } = Plugins
+      try {
+        await Filesystem.writeFile({
+          data: file,
+          path: 'recordings/' + name,
+          // path: 'secrets/text.txt',
+          // data: 'This is a test',
+          directory: FilesystemDirectory.Documents
+        }).then(() => {
+          Filesystem.getUri({
+            directory: FilesystemDirectory.Data,
+            path: 'recordings/' + name
+            // path: 'secrets/text.txt'
+          }).then(
+            result => {
+              let path = Capacitor.convertFileSrc(result.uri)
+              alert(path)
+            },
+            err => {
+              alert(err)
+            }
+          )
+        })
+      } catch (e) {
+        console.error('Unable to write file', e)
+      }
     },
     removeRecord (index) {
       this.removeRecording(index)
     },
     onStream (stream) {
-      console.log('Got a stream object:', stream)
+      // console.log('Got a stream object:', stream)
     },
     onResult (data) {
       this.addRecording({ src: window.URL.createObjectURL(data) })
+      this.convertBlobToText(data)
+    },
+    convertBlobToText (blob) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        let dataUrl = reader.result
+        let base64 = dataUrl.split(',')[1]
+        this.storeAudioFile(base64, 'Recording' + this.recordings.length + '.txt')
+      }
+      reader.readAsDataURL(blob)
     }
   }
 }
