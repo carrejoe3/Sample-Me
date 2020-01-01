@@ -1,5 +1,6 @@
 <template>
   <v-container class="recorder">
+    <!-- <v-btn @click="captureAudio">Record</v-btn> -->
     <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" />
     <div class="recordedAudio">
       <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
@@ -13,6 +14,7 @@
 <script>
 
 import { mapMutations } from 'vuex'
+import { MediaCapture } from '@ionic-native/media-capture'
 
 export default {
   name: 'Recorder',
@@ -30,6 +32,13 @@ export default {
       'addRecording',
       'removeRecording'
     ]),
+    captureAudio () {
+      MediaCapture.captureAudio().then(res => {
+        this.storeAudioFile(res)
+      })
+    },
+    storeAudioFile (file) {
+    },
     removeRecord (index) {
       this.removeRecording(index)
     },
@@ -39,9 +48,6 @@ export default {
     onResult (data) {
       this.addRecording({ src: window.URL.createObjectURL(data) })
     }
-  },
-  mounted () {
-    alert(window.cordova)
   }
 }
 </script>
