@@ -13,17 +13,29 @@
 <script>
 
 import { mapMutations } from 'vuex'
-import { Capacitor, Plugins, FilesystemDirectory } from '@capacitor/core'
+import { Plugins, FilesystemDirectory } from '@capacitor/core'
+
+const { Filesystem } = Plugins
 
 export default {
   name: 'Recorder',
   data: () => ({
-    recordMode: 'hold',
-    recordModeOptions: ['hold', 'press']
+    filesData: []
   }),
   computed: {
     recordings () {
       return this.$store.state.recordings
+    },
+    recordMode () {
+      return this.$store.state.recordMode
+    },
+    filesList: {
+      get () {
+        return this.$store.state.recordedFilesList
+      },
+      set (value) {
+        this.$store.commit('updateRecordedFilesList', value)
+      }
     }
   },
   methods: {
@@ -32,29 +44,11 @@ export default {
       'removeRecording'
     ]),
     async storeAudioFile (file, name) {
-      console.log(file)
-      const { Filesystem } = Plugins
       try {
         await Filesystem.writeFile({
           data: file,
           path: 'recordings/' + name,
-          // path: 'secrets/text.txt',
-          // data: 'This is a test',
           directory: FilesystemDirectory.Documents
-        }).then(() => {
-          Filesystem.getUri({
-            directory: FilesystemDirectory.Data,
-            path: 'recordings/' + name
-            // path: 'secrets/text.txt'
-          }).then(
-            result => {
-              let path = Capacitor.convertFileSrc(result.uri)
-              alert(path)
-            },
-            err => {
-              alert(err)
-            }
-          )
         })
       } catch (e) {
         console.error('Unable to write file', e)
@@ -78,7 +72,40 @@ export default {
         this.storeAudioFile(base64, 'Recording' + this.recordings.length + '.txt')
       }
       reader.readAsDataURL(blob)
+    },
+    async readdir (path) {
+      try {
+        await Filesystem.readdir({
+          path: path,
+          directory: FilesystemDirectory.Documents
+        }).then(
+          result => {
+            this.filesList = result.files
+          },
+          err => {
+            console.error(err)
+          }
+        )
+      } catch (e) {
+        console.error('Unable to read dir', e)
+      }
+    },
+    async fileRead (path) {
+      let contents = await Filesystem.readFile({
+        path: path,
+        directory: FilesystemDirectory.Documents
+      }).then(
+        result => {
+          this.filesData.push(result)
+        }, err => {
+          console.error(err)
+        }
+      )
+      console.log(contents)
     }
+  },
+  mounted () {
+    this.readdir('recordings')
   }
 }
 </script>
