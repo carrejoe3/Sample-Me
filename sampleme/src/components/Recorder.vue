@@ -26,6 +26,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'addRecording',
+      'removeRecording'
+    ]),
     removeRecord (index) {
       this.removeRecording(index)
     },
@@ -34,11 +38,7 @@ export default {
     },
     onResult (data) {
       this.addRecording({ src: window.URL.createObjectURL(data) })
-    },
-    ...mapMutations([
-      'addRecording',
-      'removeRecording'
-    ])
+    }
   }
 }
 </script>
