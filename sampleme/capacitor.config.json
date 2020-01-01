@@ -1,0 +1,8 @@
+{
+  "appId": "com.joecarre.sampleme",
+  "appName": "Sample Me",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "cordova": {}
+}

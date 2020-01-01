@@ -39,6 +39,9 @@ export default {
     onResult (data) {
       this.addRecording({ src: window.URL.createObjectURL(data) })
     }
+  },
+  mounted () {
+    alert(window.cordova)
   }
 }
 </script>

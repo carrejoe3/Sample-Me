@@ -4,11 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import VueRecord from '@codekraft-studio/vue-record'
-import Ionic from "@ionic/vue";
+import Ionic from '@ionic/vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRecord)
-Vue.use(Ionic);
+Vue.use(Ionic)
 
 new Vue({
   router,
