@@ -5,6 +5,11 @@
 </template>
 
 <script>
+
+import { Plugins, FilesystemDirectory } from '@capacitor/core'
+
+const { Filesystem } = Plugins
+
 export default {
   name: 'Files',
   computed: {
@@ -18,9 +23,42 @@ export default {
     }
   },
   methods: {
-    padTapHandler (row, col) {
-      console.log('pad tapped: ' + row + col)
+    async readdir (path) {
+      try {
+        await Filesystem.readdir({
+          path: path,
+          directory: FilesystemDirectory.Documents
+        }).then(
+          result => {
+            this.filesList = result.files
+          },
+          err => {
+            console.error(err)
+          }
+        )
+      } catch (e) {
+        console.error('Unable to read dir', e)
+      }
+    },
+    async fileRead (path) {
+      let contents = await Filesystem.readFile({
+        path: path,
+        directory: FilesystemDirectory.Documents
+      }).then(
+        result => {
+          this.filesData.push(result)
+        }, err => {
+          console.error(err)
+        }
+      )
+      console.log(contents)
+    },
+    removeRecord (index) {
+      this.removeRecording(index)
     }
+  },
+  mounted () {
+    this.readdir('recordings')
   }
 }
 </script>

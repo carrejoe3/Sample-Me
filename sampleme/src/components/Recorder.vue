@@ -1,12 +1,11 @@
 <template>
   <v-container class="recorder">
     <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" />
-    <div class="recordedAudio">
-      <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
-        <audio :src="record.src" controls/>
-        <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
-      </div>
-    </div>
+    <!-- <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
+      <audio :src="record.src" controls/>
+      <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
+    </div> -->
+    <div id="wavForm"></div>
   </v-container>
 </template>
 
@@ -14,13 +13,15 @@
 
 import { mapMutations } from 'vuex'
 import { Plugins, FilesystemDirectory } from '@capacitor/core'
+import WaveSurfer from 'wavesurfer.js'
 
 const { Filesystem } = Plugins
 
 export default {
   name: 'Recorder',
   data: () => ({
-    filesData: []
+    filesData: [],
+    waveSurfer: null
   }),
   computed: {
     recordings () {
@@ -54,9 +55,6 @@ export default {
         console.error('Unable to write file', e)
       }
     },
-    removeRecord (index) {
-      this.removeRecording(index)
-    },
     onStream (stream) {
       // console.log('Got a stream object:', stream)
     },
@@ -73,39 +71,20 @@ export default {
       }
       reader.readAsDataURL(blob)
     },
-    async readdir (path) {
-      try {
-        await Filesystem.readdir({
-          path: path,
-          directory: FilesystemDirectory.Documents
-        }).then(
-          result => {
-            this.filesList = result.files
-          },
-          err => {
-            console.error(err)
-          }
-        )
-      } catch (e) {
-        console.error('Unable to read dir', e)
-      }
-    },
-    async fileRead (path) {
-      let contents = await Filesystem.readFile({
-        path: path,
-        directory: FilesystemDirectory.Documents
-      }).then(
-        result => {
-          this.filesData.push(result)
-        }, err => {
-          console.error(err)
-        }
-      )
-      console.log(contents)
+    buildWavSurfer () {
+      this.waveSurfer = WaveSurfer.create({
+        container: '#wavForm',
+        waveColor: 'red',
+        barHeight: 20,
+        hideScrollbar: true,
+        audioRate: 1,
+        barWidth: 2,
+        interact: false
+      })
     }
   },
   mounted () {
-    this.readdir('recordings')
+    this.buildWavSurfer()
   }
 }
 </script>
