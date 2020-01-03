@@ -3,13 +3,13 @@
     <v-content>
       <router-view></router-view>
       <v-bottom-navigation grow v-model="bottomNav">
-        <v-btn value="sampler" to="/">
-          <span>Sampler</span>
-          <v-icon>mdi-grid</v-icon>
-        </v-btn>
-        <v-btn value="recorder" to="/recorder">
+        <v-btn value="recorder" to="/">
           <span>Recorder</span>
           <v-icon>mdi-microphone</v-icon>
+        </v-btn>
+        <v-btn value="sampler" to="/files">
+          <span>Files</span>
+          <v-icon>mdi-file-cabinet</v-icon>
         </v-btn>
         <v-btn value="settings" to="/settings">
           <span>Settings</span>

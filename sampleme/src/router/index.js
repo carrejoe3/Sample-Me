@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import SamplerPage from '../views/Samplerpage.vue'
+import FilesPage from '../views/Filespage.vue'
 import RecorderPage from '../views/Recorderpage.vue'
 import SettingsPage from '../views/Settingspage.vue'
 
@@ -8,12 +8,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'SamplerPage',
-    component: SamplerPage
+    path: '/files',
+    name: 'FilesPage',
+    component: FilesPage
   },
   {
-    path: '/recorder',
+    path: '/',
     name: 'RecorderPage',
     component: RecorderPage
   },
