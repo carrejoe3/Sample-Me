@@ -11,10 +11,7 @@
 
 <script>
 
-import { Plugins, FilesystemDirectory } from '@capacitor/core'
 import WaveSurfer from 'wavesurfer.js'
-
-const { Filesystem } = Plugins
 
 export default {
   name: 'Recorder',
@@ -30,19 +27,6 @@ export default {
     }
   },
   methods: {
-    async storeAudioFile (file, name) {
-      try {
-        await Filesystem.writeFile({
-          data: file,
-          path: 'recordings/' + name,
-          directory: FilesystemDirectory.Documents
-        }).then(() => {
-          this.$store.commit('addFile', { name: name, data: file })
-        })
-      } catch (e) {
-        console.error('Unable to write file', e)
-      }
-    },
     onStream (stream) {
       // console.log('Got a stream object:', stream)
     },
@@ -54,7 +38,7 @@ export default {
       reader.onload = () => {
         let dataUrl = reader.result
         let base64 = dataUrl.split(',')[1]
-        this.storeAudioFile(base64, 'Recording' + (this.recordings.length + 1) + '.txt')
+        this.$store.commit('addFile', { name: 'Recording' + (this.recordings.length + 1), data: base64 })
       }
       reader.readAsDataURL(blob)
     },

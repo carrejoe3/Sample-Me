@@ -7,10 +7,7 @@
 
 <script>
 
-import { Plugins, FilesystemDirectory } from '@capacitor/core'
 import WaveSurfer from 'wavesurfer.js'
-
-const { Filesystem } = Plugins
 
 export default {
   name: 'Files',
@@ -20,36 +17,6 @@ export default {
     }
   },
   methods: {
-    async readdir (path) {
-      try {
-        await Filesystem.readdir({
-          path: path,
-          directory: FilesystemDirectory.Documents
-        }).then(
-          result => {
-            this.filesList = result.files
-          },
-          err => {
-            console.error(err)
-          }
-        )
-      } catch (e) {
-        console.error('Unable to read dir', e)
-      }
-    },
-    async fileRead (path) {
-      let contents = await Filesystem.readFile({
-        path: path,
-        directory: FilesystemDirectory.Documents
-      }).then(
-        result => {
-          this.fileData.push(result)
-        }, err => {
-          console.error(err)
-        }
-      )
-      console.log(contents)
-    },
     removeRecord (index) {
       this.removeRecording(index)
     },
@@ -69,7 +36,6 @@ export default {
     }
   },
   mounted () {
-    // this.readdir('recordings')
     this.buildWavSurfer()
   }
 }
