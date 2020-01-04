@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     updateRecordMode (state, mode) {
       state.recordMode = mode
+    },
+    removeFile (state, index) {
+      state.recordedFiles.splice(index, 1)
     }
   },
   getters: {

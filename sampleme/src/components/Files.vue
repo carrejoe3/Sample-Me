@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <div v-for="(file, index) in files" :key="index" @click="loadFile(file)">{{ file.name }}</div>
+    <div v-for="(file, index) in files" :key="index" class="file">
+      <div @click="loadFile(file)">{{ file.name }}</div>
+      <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
+    </div>
     <div id="wavForm"></div>
   </v-container>
 </template>
@@ -18,7 +21,7 @@ export default {
   },
   methods: {
     removeRecord (index) {
-      this.removeRecording(index)
+      this.$store.commit('removeFile', index)
     },
     loadFile (name) {
       console.log(name)
@@ -40,3 +43,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.file {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
