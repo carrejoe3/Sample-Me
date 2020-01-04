@@ -1,9 +1,16 @@
 <template>
   <v-container>
-    <div v-for="(file, index) in files" :key="index" class="file">
-      <div @click="loadFile(file)">{{ file.name }}</div>
-      <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
-    </div>
+    <v-list>
+      <v-list-item v-for="(file, index) in files" :key="index" class="file">
+        <v-list-item-action>
+          <v-icon @click="loadFile(file)">mdi-play</v-icon>
+        </v-list-item-action>
+        {{ file.name }}
+        <v-list-item-action>
+          <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list>
     <div id="wavForm"></div>
   </v-container>
 </template>
