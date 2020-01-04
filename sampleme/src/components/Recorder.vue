@@ -11,7 +11,6 @@
 
 <script>
 
-import { mapMutations } from 'vuex'
 import { Plugins, FilesystemDirectory } from '@capacitor/core'
 import WaveSurfer from 'wavesurfer.js'
 
@@ -20,36 +19,25 @@ const { Filesystem } = Plugins
 export default {
   name: 'Recorder',
   data: () => ({
-    filesData: [],
     waveSurfer: null
   }),
   computed: {
     recordings () {
-      return this.$store.state.recordings
+      return this.$store.state.recordedFiles
     },
     recordMode () {
       return this.$store.state.recordMode
-    },
-    filesList: {
-      get () {
-        return this.$store.state.recordedFilesList
-      },
-      set (value) {
-        this.$store.commit('updateRecordedFilesList', value)
-      }
     }
   },
   methods: {
-    ...mapMutations([
-      'addRecording',
-      'removeRecording'
-    ]),
     async storeAudioFile (file, name) {
       try {
         await Filesystem.writeFile({
           data: file,
           path: 'recordings/' + name,
           directory: FilesystemDirectory.Documents
+        }).then(() => {
+          this.$store.commit('addFile', { name: name, data: file })
         })
       } catch (e) {
         console.error('Unable to write file', e)
@@ -59,7 +47,6 @@ export default {
       // console.log('Got a stream object:', stream)
     },
     onResult (data) {
-      this.addRecording({ src: window.URL.createObjectURL(data) })
       this.convertBlobToText(data)
     },
     convertBlobToText (blob) {
@@ -67,7 +54,7 @@ export default {
       reader.onload = () => {
         let dataUrl = reader.result
         let base64 = dataUrl.split(',')[1]
-        this.storeAudioFile(base64, 'Recording' + this.recordings.length + '.txt')
+        this.storeAudioFile(base64, 'Recording' + (this.recordings.length + 1) + '.txt')
       }
       reader.readAsDataURL(blob)
     },

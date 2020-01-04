@@ -1,25 +1,22 @@
 <template>
   <v-container>
-    <div v-for="file in files" :key="file">{{ file }}</div>
+    <div v-for="(file, index) in files" :key="index" @click="loadFile(file)">{{ file.name }}</div>
+    <div id="wavForm"></div>
   </v-container>
 </template>
 
 <script>
 
 import { Plugins, FilesystemDirectory } from '@capacitor/core'
+import WaveSurfer from 'wavesurfer.js'
 
 const { Filesystem } = Plugins
 
 export default {
   name: 'Files',
   computed: {
-    files: {
-      get () {
-        return this.$store.state.recordedFilesList
-      },
-      set (files) {
-        this.$store.commit('updateRecordedFilesList', files)
-      }
+    files () {
+      return this.$store.state.recordedFiles
     }
   },
   methods: {
@@ -46,7 +43,7 @@ export default {
         directory: FilesystemDirectory.Documents
       }).then(
         result => {
-          this.filesData.push(result)
+          this.fileData.push(result)
         }, err => {
           console.error(err)
         }
@@ -55,10 +52,25 @@ export default {
     },
     removeRecord (index) {
       this.removeRecording(index)
+    },
+    loadFile (name) {
+      console.log(name)
+    },
+    buildWavSurfer () {
+      this.waveSurfer = WaveSurfer.create({
+        container: '#wavForm',
+        waveColor: 'red',
+        barHeight: 20,
+        hideScrollbar: true,
+        audioRate: 1,
+        barWidth: 2,
+        interact: false
+      })
     }
   },
   mounted () {
-    this.readdir('recordings')
+    // this.readdir('recordings')
+    this.buildWavSurfer()
   }
 }
 </script>

@@ -6,21 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     recordMode: 'hold',
-    recordings: [],
-    recordedFilesList: []
+    recordedFiles: []
   },
   mutations: {
+    addFile (state, newFile) {
+      state.recordedFiles.push(newFile)
+    },
     updateRecordMode (state, mode) {
       state.recordMode = mode
-    },
-    addRecording (state, recording) {
-      state.recordings.push(recording)
-    },
-    removeRecording (state, index) {
-      state.recordings.splice(index, 1)
-    },
-    updateRecordedFilesList (state, list) {
-      state.recordedFilesList = list
     }
   },
   getters: {
