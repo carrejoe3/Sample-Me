@@ -94,6 +94,10 @@ export default {
         barWidth: 3,
         interact: true
       })
+
+      this.waveSurfer.on('finish', () => {
+        this.togglePlayPauseIcon()
+      })
     },
     convertToBinary (base64) {
       let raw = window.atob(base64)
