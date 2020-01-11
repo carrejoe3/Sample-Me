@@ -3,7 +3,7 @@
     <div id='wavForm'></div>
     <v-toolbar color='elevation-0'>
       <v-toolbar-items id="audioControls" v-for='(button, index) in audioControlButtons' :key='index'>
-        <v-btn @click="button.method" icon x-large>
+        <v-btn @click="button.method" icon x-large :disabled="button.disabled">
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -35,36 +35,43 @@ export default {
       waveSurfer: null,
       audioControlButtons: [
         {
-          id: 'skipBackwards',
+          id: 'previousFile',
           icon: 'mdi-skip-previous',
-          method: this.skipBackwards
+          method: this.previousFile,
+          disabled: false
         },
         {
-          id: 'skipForwards',
+          id: 'nextFile',
           icon: 'mdi-skip-next',
-          method: this.skipForwards
+          method: this.nextFile,
+          disabled: false
         },
         {
-          id: 'rewind',
+          id: 'skipBackwards',
           icon: 'mdi-rewind',
-          method: this.skipBackwards
+          method: this.skipBackwards,
+          disabled: false
         },
         {
           id: 'playPause',
           icon: 'mdi-play',
-          method: this.playPause
+          method: this.playPause,
+          disabled: false
         },
         {
           id: 'skipForwards',
           icon: 'mdi-fast-forward',
-          method: this.skipForwards
+          method: this.skipForwards,
+          disabled: false
         },
         {
           id: 'volume',
           icon: 'mdi-volume-high',
-          method: this.playPause
+          method: this.playPause,
+          disabled: false
         }
-      ]
+      ],
+      selectedFileIndex: 0
     }
   },
   computed: {
@@ -80,6 +87,20 @@ export default {
       this.$store.commit('removeFile', index)
     },
     loadFile (index) {
+      this.selectedFileIndex = index
+
+      const nextFileBtn = this.audioControlButtons.find(btn => btn.id === 'nextFile')
+      const prevFileBtn = this.audioControlButtons.find(btn => btn.id === 'previousFile')
+
+      if (this.selectedFileIndex === this.files.length - 1) {
+        nextFileBtn.disabled = true
+      } else if (this.selectedFileIndex === 0) {
+        prevFileBtn.disabled = true
+      } else {
+        nextFileBtn.disabled = false
+        prevFileBtn.disabled = false
+      }
+
       let binary = this.convertToBinary(this.files[index].data)
       let blob = new Blob([binary], {
         type: 'audio/ogg'
@@ -116,6 +137,12 @@ export default {
     playPause () {
       this.waveSurfer.playPause()
       this.togglePlayPauseIcon()
+    },
+    nextFile () {
+      this.loadFile(this.selectedFileIndex + 1)
+    },
+    previousFile () {
+      this.loadFile(this.selectedFileIndex - 1)
     },
     skipForwards () {
       this.waveSurfer.skipForward()
