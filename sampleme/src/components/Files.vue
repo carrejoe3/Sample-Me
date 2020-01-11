@@ -70,6 +70,9 @@ export default {
   computed: {
     files () {
       return this.$store.state.recordedFiles
+    },
+    selectedColour () {
+      return this.$store.state.selectedColour
     }
   },
   methods: {
@@ -86,7 +89,7 @@ export default {
     buildWavSurfer () {
       this.waveSurfer = WaveSurfer.create({
         container: '#wavForm',
-        waveColor: 'red',
+        waveColor: this.selectedColour,
         barHeight: 20,
         barRadius: 3,
         hideScrollbar: true,

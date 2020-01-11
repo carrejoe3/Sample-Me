@@ -11,7 +11,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     recordMode: 'hold',
-    recordedFiles: []
+    recordedFiles: [],
+    selectedColour: 'red'
   },
   mutations: {
     addFile (state, newFile) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     removeFile (state, index) {
       state.recordedFiles.splice(index, 1)
+    },
+    updateSelectedColour (state, colour) {
+      state.selectedColour = colour
     }
   },
   getters: {
