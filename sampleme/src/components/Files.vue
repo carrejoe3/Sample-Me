@@ -140,5 +140,8 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
+.v-toolbar__content {
+  justify-content: space-around;
+}
 </style>
