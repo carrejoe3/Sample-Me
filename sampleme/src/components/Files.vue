@@ -65,9 +65,9 @@ export default {
           disabled: false
         },
         {
-          id: 'volume',
+          id: 'mute',
           icon: 'mdi-volume-high',
-          method: this.playPause,
+          method: this.toggleMute,
           disabled: false
         }
       ],
@@ -111,7 +111,7 @@ export default {
       this.waveSurfer = WaveSurfer.create({
         container: '#wavForm',
         waveColor: this.selectedColour,
-        barHeight: 3,
+        barHeight: 20,
         barRadius: 3,
         hideScrollbar: true,
         audioRate: 1,
@@ -156,6 +156,16 @@ export default {
         playPauseBtn.icon = 'mdi-pause'
       } else {
         playPauseBtn.icon = 'mdi-play'
+      }
+    },
+    toggleMute () {
+      const muteBtn = this.audioControlButtons.find(btn => btn.id === 'mute')
+      if (muteBtn.icon === 'mdi-volume-high') {
+        muteBtn.icon = 'mdi-volume-mute'
+        this.waveSurfer.setMute(true)
+      } else {
+        muteBtn.icon = 'mdi-volume-high'
+        this.waveSurfer.setMute(false)
       }
     }
   },
