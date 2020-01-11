@@ -2,8 +2,8 @@
   <v-container>
     <v-select v-model="recordMode" :items="recordModeOptions" label="Recorder mode"></v-select>
     <v-btn @click="colourPickerPopup = true">Choose main colour</v-btn>
-    <v-dialog v-model="colourPickerPopup">
-      <v-color-picker hide-inputs v-model="selectedColour"></v-color-picker>
+    <v-dialog v-model="colourPickerPopup" width='unset'>
+      <v-color-picker hide-inputs v-model="selectedColour" width="500"></v-color-picker>
     </v-dialog>
   </v-container>
 </template>
