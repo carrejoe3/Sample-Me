@@ -109,6 +109,8 @@ export default {
     loadFile (index) {
       this.selectedFileIndex = index
 
+      this.audioControlButtons.find(btn => btn.id === 'playPause').icon = 'mdi-play'
+
       const nextFileBtn = this.audioControlButtons.find(btn => btn.id === 'nextFile')
       const prevFileBtn = this.audioControlButtons.find(btn => btn.id === 'previousFile')
 
