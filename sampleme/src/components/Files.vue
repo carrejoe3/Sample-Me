@@ -8,7 +8,7 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-list>
+    <v-list id="fileList" class="overflow-y-auto">
       <v-list-item v-for='(file, index) in files' :key='index' class='file' @click='loadFile(index)'>
         <v-list-item-action>
           <v-icon @click='removeRecord(index)'>mdi-delete</v-icon>
@@ -90,12 +90,13 @@ export default {
       this.waveSurfer = WaveSurfer.create({
         container: '#wavForm',
         waveColor: this.selectedColour,
-        barHeight: 20,
+        barHeight: 3,
         barRadius: 3,
         hideScrollbar: true,
         audioRate: 1,
-        barWidth: 3,
-        interact: true
+        barWidth: 1,
+        interact: true,
+        responsive: true
       })
 
       this.waveSurfer.on('finish', () => {
@@ -143,5 +144,8 @@ export default {
 <style lang='scss'>
 .v-toolbar__content {
   justify-content: space-around;
+}
+#fileList {
+  max-height: 65vh;
 }
 </style>
