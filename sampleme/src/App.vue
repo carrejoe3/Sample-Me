@@ -3,15 +3,15 @@
     <v-content>
       <router-view></router-view>
       <v-bottom-navigation grow>
-        <v-btn to="/">
+        <v-btn to="/" ripple icon>
           <span>Recorder</span>
           <v-icon>mdi-microphone</v-icon>
         </v-btn>
-        <v-btn to="/files">
+        <v-btn to="/files" ripple icon>
           <span>Files</span>
           <v-icon>mdi-file-cabinet</v-icon>
         </v-btn>
-        <v-btn to="/settings">
+        <v-btn to="/settings" ripple icon>
           <span>Settings</span>
           <v-icon>mdi-settings</v-icon>
         </v-btn>
