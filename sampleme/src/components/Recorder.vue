@@ -42,7 +42,10 @@ export default {
       reader.onload = () => {
         let dataUrl = reader.result
         let base64 = dataUrl.split(',')[1]
-        this.$store.commit('addFile', { name: 'Recording' + (this.recordings.length + 1), data: base64 })
+        this.$store.commit('addFile', {
+          name: 'Recording ' + (this.recordings.length + 1),
+          data: base64
+        })
       }
       reader.readAsDataURL(blob)
     },

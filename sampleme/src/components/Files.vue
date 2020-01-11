@@ -1,26 +1,43 @@
 <template>
   <v-container>
     <div id='wavForm'></div>
-    <v-toolbar color='elevation-0'>
+    <v-toolbar color='elevation-0' v-if="files.length > 0">
       <v-toolbar-items id="audioControls" v-for='(button, index) in audioControlButtons' :key='index'>
         <v-btn @click="button.method" icon x-large :disabled="button.disabled">
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-list id="fileList" class="overflow-y-auto">
-      <v-list-item v-for='(file, index) in files' :key='index' class='file' @click='loadFile(index)'>
-        <v-list-item-action>
-          <v-icon @click='removeRecord(index)'>mdi-delete</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
+    <v-list id="fileList" class="overflow-y-auto" v-if="files.length > 0">
+      <v-list-item v-for='(file, index) in files' :key='index' class='file'>
+        <v-list-item-content @click='loadFile(index)'>
           <v-list-item-title>{{ file.name }}</v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
-          <v-icon>mdi-share</v-icon>
+          <v-btn @click="showEditPanel = true" icon>
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
+    <v-dialog v-model="showEditPanel" v-if="files.length > 0">
+      <v-card>
+        <v-card-title class="headline" primary-title>
+          <v-text-field label='Name' v-model="files[selectedFileIndex].name"></v-text-field>
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-text id="editPanelBtns">
+          <v-btn @click="removeRecord">
+            Delete
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+          <v-btn @click="shareFile">
+            Share
+            <v-icon>mdi-share</v-icon>
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -71,7 +88,8 @@ export default {
           disabled: false
         }
       ],
-      selectedFileIndex: 0
+      selectedFileIndex: 0,
+      showEditPanel: false
     }
   },
   computed: {
@@ -83,8 +101,9 @@ export default {
     }
   },
   methods: {
-    removeRecord (index) {
-      this.$store.commit('removeFile', index)
+    removeRecord () {
+      this.showEditPanel = false
+      this.$store.commit('removeFile', this.selectedFileIndex)
     },
     loadFile (index) {
       this.selectedFileIndex = index
@@ -167,6 +186,9 @@ export default {
         muteBtn.icon = 'mdi-volume-high'
         this.waveSurfer.setMute(false)
       }
+    },
+    shareFile () {
+      console.log('share meeeee')
     }
   },
   mounted () {
@@ -184,5 +206,9 @@ export default {
 }
 #fileList {
   max-height: 65vh;
+}
+#editPanelBtns {
+  display: flex;
+  justify-content: space-around;
 }
 </style>
