@@ -3,7 +3,7 @@
     <div id='wavForm'></div>
     <v-toolbar color='elevation-0'>
       <v-toolbar-items id="audioControls" v-for='(button, index) in audioControlButtons' :key='index'>
-        <v-btn @click="button.method">
+        <v-btn @click="button.method" icon x-large>
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -35,26 +35,32 @@ export default {
       waveSurfer: null,
       audioControlButtons: [
         {
+          id: 'skipBackwards',
           icon: 'mdi-skip-previous',
           method: this.skipBackwards
         },
         {
+          id: 'skipForwards',
           icon: 'mdi-skip-next',
           method: this.skipForwards
         },
         {
+          id: 'rewind',
           icon: 'mdi-rewind',
           method: this.skipBackwards
         },
         {
+          id: 'playPause',
           icon: 'mdi-play',
           method: this.playPause
         },
         {
+          id: 'skipForwards',
           icon: 'mdi-fast-forward',
           method: this.skipForwards
         },
         {
+          id: 'volume',
           icon: 'mdi-volume-high',
           method: this.playPause
         }
@@ -101,12 +107,21 @@ export default {
     },
     playPause () {
       this.waveSurfer.playPause()
+      this.togglePlayPauseIcon()
     },
     skipForwards () {
       this.waveSurfer.skipForward()
     },
     skipBackwards () {
       this.waveSurfer.skipBackward()
+    },
+    togglePlayPauseIcon () {
+      const playPauseBtn = this.audioControlButtons.find(btn => btn.id === 'playPause')
+      if (playPauseBtn.icon === 'mdi-play') {
+        playPauseBtn.icon = 'mdi-pause'
+      } else {
+        playPauseBtn.icon = 'mdi-play'
+      }
     }
   },
   mounted () {
