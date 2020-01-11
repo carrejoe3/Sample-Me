@@ -2,16 +2,16 @@
   <v-app>
     <v-content>
       <router-view></router-view>
-      <v-bottom-navigation grow v-model="bottomNav">
-        <v-btn value="recorder" to="/">
+      <v-bottom-navigation grow>
+        <v-btn to="/">
           <span>Recorder</span>
           <v-icon>mdi-microphone</v-icon>
         </v-btn>
-        <v-btn value="sampler" to="/files">
+        <v-btn to="/files">
           <span>Files</span>
           <v-icon>mdi-file-cabinet</v-icon>
         </v-btn>
-        <v-btn value="settings" to="/settings">
+        <v-btn to="/settings">
           <span>Settings</span>
           <v-icon>mdi-settings</v-icon>
         </v-btn>
@@ -22,12 +22,7 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      bottomNav: 'sampler'
-    }
-  }
+  name: 'App'
 }
 </script>
 
