@@ -44,7 +44,8 @@ export default {
         let base64 = dataUrl.split(',')[1]
         this.$store.commit('addFile', {
           name: 'Recording ' + (this.recordings.length + 1),
-          data: base64
+          data: base64,
+          date: new Date().toLocaleString()
         })
       }
       reader.readAsDataURL(blob)

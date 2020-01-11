@@ -12,6 +12,7 @@
       <v-list-item v-for='(file, index) in files' :key='index' class='file'>
         <v-list-item-content @click='loadFile(index)'>
           <v-list-item-title>{{ file.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{ file.date }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-btn @click="showEditPanel = true" icon>
