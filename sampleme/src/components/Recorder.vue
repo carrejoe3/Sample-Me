@@ -1,10 +1,6 @@
 <template>
   <v-container class="recorder">
-    <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" />
-    <!-- <div v-for="(record, index) in recordings" :key="index" class="recordedItem">
-      <audio :src="record.src" controls/>
-      <v-icon @click="removeRecord(index)">mdi-delete</v-icon>
-    </div> -->
+    <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" :style="recorderStyles"/>
     <div id="wavForm"></div>
   </v-container>
 </template>
@@ -24,6 +20,14 @@ export default {
     },
     recordMode () {
       return this.$store.state.recordMode
+    },
+    selectedColour () {
+      return this.$store.state.selectedColour
+    },
+    recorderStyles () {
+      return {
+        'background-color': this.selectedColour
+      }
     }
   },
   methods: {
