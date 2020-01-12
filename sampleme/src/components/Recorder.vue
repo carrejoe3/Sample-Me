@@ -1,6 +1,5 @@
 <template>
   <v-container class="recorder">
-    <vue-record-audio mode="hold" @stream="onStream" @result="onResult" :style="recorderStyles"/>
     <div id="wavForm"></div>
   </v-container>
 </template>
