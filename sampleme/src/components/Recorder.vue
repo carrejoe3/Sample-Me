@@ -1,6 +1,6 @@
 <template>
   <v-container class="recorder">
-    <vue-record-audio :mode="recordMode" @stream="onStream" @result="onResult" :style="recorderStyles"/>
+    <vue-record-audio mode="hold" @stream="onStream" @result="onResult" :style="recorderStyles"/>
     <div id="wavForm"></div>
   </v-container>
 </template>
@@ -8,6 +8,7 @@
 <script>
 
 import WaveSurfer from 'wavesurfer.js'
+import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js'
 
 export default {
   name: 'Recorder',
@@ -53,13 +54,19 @@ export default {
     buildWavSurfer () {
       this.waveSurfer = WaveSurfer.create({
         container: '#wavForm',
-        waveColor: 'red',
+        waveColor: this.selectedColour,
         barHeight: 20,
         hideScrollbar: true,
         audioRate: 1,
         barWidth: 2,
-        interact: false
+        interact: false,
+        cursorWidth: 0,
+        plugins: [
+          MicrophonePlugin.create()
+        ]
       })
+
+      this.waveSurfer.microphone.start()
     }
   },
   mounted () {
@@ -73,6 +80,8 @@ export default {
   text-align: center;
   .vue-audio-recorder {
     margin-top: 3%;
+    height: 30vh;
+    width: 30vh;
   }
   .recordedAudio {
     margin-top: 3%;
