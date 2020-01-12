@@ -80,6 +80,7 @@ export default {
         barWidth: 2,
         interact: false,
         cursorWidth: 0,
+        height: '200',
         plugins: [
           MicrophonePlugin.create()
         ]
@@ -98,7 +99,7 @@ export default {
 .recorder {
   text-align: center;
   #recordBtn {
-    margin-top: 3%;
+    margin: 15% 0%;
     height: 30vh;
     width: 30vh;
   }
