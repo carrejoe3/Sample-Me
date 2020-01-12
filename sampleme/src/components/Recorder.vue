@@ -1,5 +1,8 @@
 <template>
   <v-container class="recorder">
+    <v-btn large icon @click="isRecording ? stopRecord() : startRecord()" id="recordBtn">
+      <v-icon>mdi-microphone</v-icon>
+    </v-btn>
     <div id="wavForm"></div>
   </v-container>
 </template>
@@ -12,7 +15,9 @@ import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.mi
 export default {
   name: 'Recorder',
   data: () => ({
-    waveSurfer: null
+    waveSurfer: null,
+    mediaRecorder: null,
+    isRecording: 0
   }),
   computed: {
     recordings () {
@@ -28,8 +33,28 @@ export default {
     }
   },
   methods: {
-    onStream (stream) {
-      // console.log('Got a stream object:', stream)
+    startRecord () {
+      this.isRecording = true
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          this.mediaRecorder = new MediaRecorder(stream)
+          this.mediaRecorder.start()
+
+          const audioChunks = []
+
+          this.mediaRecorder.addEventListener('dataavailable', event => {
+            audioChunks.push(event.data)
+          })
+
+          this.mediaRecorder.addEventListener('stop', () => {
+            const audioBlob = new Blob(audioChunks)
+            this.convertBlobToText(audioBlob)
+          })
+        })
+    },
+    stopRecord () {
+      this.isRecording = false
+      this.mediaRecorder.stop()
     },
     onResult (data) {
       this.convertBlobToText(data)
@@ -74,22 +99,10 @@ export default {
 <style lang="scss" scoped>
 .recorder {
   text-align: center;
-  .vue-audio-recorder {
+  #recordBtn {
     margin-top: 3%;
     height: 30vh;
     width: 30vh;
-  }
-  .recordedAudio {
-    margin-top: 3%;
-    audio {
-      width: 80%;
-    }
-    .recordedItem {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 2%;
-    }
   }
 }
 </style>
