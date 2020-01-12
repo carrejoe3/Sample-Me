@@ -28,6 +28,9 @@ export default {
     },
     recorderStyles () {
       return this.isRecording ? { 'background-color': this.selectedColour } : { 'background-color': 'white' }
+    },
+    normalise () {
+      return this.$store.state.normalise
     }
   },
   methods: {
@@ -81,6 +84,7 @@ export default {
         interact: false,
         cursorWidth: 0,
         height: '200',
+        normalise: this.normalise,
         plugins: [
           MicrophonePlugin.create()
         ]

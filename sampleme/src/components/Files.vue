@@ -99,6 +99,9 @@ export default {
     },
     selectedColour () {
       return this.$store.state.selectedColour
+    },
+    normalise () {
+      return this.$store.state.normalise
     }
   },
   methods: {
@@ -139,7 +142,8 @@ export default {
         audioRate: 1,
         barWidth: 1,
         interact: true,
-        responsive: true
+        responsive: true,
+        normalise: this.normalise
       })
 
       this.waveSurfer.on('finish', () => {

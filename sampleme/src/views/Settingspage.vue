@@ -4,6 +4,7 @@
     <v-dialog v-model="colourPickerPopup" width='unset'>
       <v-color-picker hide-inputs v-model="selectedColour" width="500"></v-color-picker>
     </v-dialog>
+    <v-switch v-model="normalise" label="Normalise waves"></v-switch>
   </v-container>
 </template>
 
@@ -25,6 +26,14 @@ export default {
         this.updateRecordMode(mode)
       }
     },
+    normalise: {
+      get () {
+        return this.$store.state.normalise
+      },
+      set (bool) {
+        this.updateNormalise(bool)
+      }
+    },
     selectedColour: {
       get () {
         return this.$store.state.selectedColour
@@ -36,7 +45,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'updateSelectedColour'
+      'updateSelectedColour',
+      'updateNormalise'
     ])
   }
 }

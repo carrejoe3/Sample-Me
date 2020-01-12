@@ -11,7 +11,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     recordedFiles: [],
-    selectedColour: 'red'
+    selectedColour: 'red',
+    normalise: false
   },
   mutations: {
     addFile (state, newFile) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     updateSelectedColour (state, colour) {
       state.selectedColour = colour
+    },
+    updateNormalise (state, bool) {
+      state.normalise = bool
     }
   },
   getters: {
