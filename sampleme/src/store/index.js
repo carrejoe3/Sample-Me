@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   mutations: {
     addFile (state, newFile) {
-      state.recordedFiles.push(newFile)
+      state.recordedFiles.unshift(newFile)
     },
     removeFile (state, index) {
       state.recordedFiles.splice(index, 1)
