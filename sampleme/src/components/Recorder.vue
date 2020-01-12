@@ -95,6 +95,9 @@ export default {
   },
   mounted () {
     this.buildWavSurfer()
+  },
+  beforeDestroy () {
+    if (this.isRecording) this.stopRecord()
   }
 }
 </script>
