@@ -12,7 +12,8 @@ export default new Vuex.Store({
   state: {
     recordedFiles: [],
     selectedColour: 'red',
-    normalise: false
+    normalise: false,
+    bitRate: 128000
   },
   mutations: {
     addFile (state, newFile) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     updateNormalise (state, bool) {
       state.normalise = bool
+    },
+    updateBitRate (state, bitRate) {
+      state.bitRate = bitRate
     }
   },
   getters: {

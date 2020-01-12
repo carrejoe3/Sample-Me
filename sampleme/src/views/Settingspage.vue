@@ -4,6 +4,7 @@
     <v-dialog v-model="colourPickerPopup" width='unset'>
       <v-color-picker hide-inputs v-model="selectedColour" width="500"></v-color-picker>
     </v-dialog>
+    <v-overflow-btn :items="bitRateOptions" :value="bitRateOptions.value" v-model="bitRate" label="Bitrate"></v-overflow-btn>
     <v-switch v-model="normalise" label="Normalise waves"></v-switch>
   </v-container>
 </template>
@@ -15,15 +16,37 @@ import { mapMutations } from 'vuex'
 export default {
   name: 'SettingsPage',
   data: () => ({
-    colourPickerPopup: false
+    colourPickerPopup: false,
+    bitRateOptions: [
+      {
+        text: '64kbps',
+        value: 64000
+      },
+      {
+        text: '128kbps',
+        value: 128000
+      },
+      {
+        text: '192kbps',
+        value: 192000
+      },
+      {
+        text: '256kbps',
+        value: 256000
+      },
+      {
+        text: '320kpbs',
+        value: 320000
+      }
+    ]
   }),
   computed: {
-    recordMode: {
+    bitRate: {
       get () {
-        return this.$store.state.recordMode
+        return this.$store.state.bitRate
       },
-      set (mode) {
-        this.updateRecordMode(mode)
+      set (bitRate) {
+        this.updateBitRate(bitRate)
       }
     },
     normalise: {
@@ -46,7 +69,8 @@ export default {
   methods: {
     ...mapMutations([
       'updateSelectedColour',
-      'updateNormalise'
+      'updateNormalise',
+      'updateBitRate'
     ])
   }
 }

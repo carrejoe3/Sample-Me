@@ -31,6 +31,9 @@ export default {
     },
     normalise () {
       return this.$store.state.normalise
+    },
+    bitRate () {
+      return this.$store.state.bitRate
     }
   },
   methods: {
@@ -38,7 +41,10 @@ export default {
       this.isRecording = true
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
-          this.mediaRecorder = new MediaRecorder(stream)
+          const options = {
+            audioBitsPerSecond: this.bitRate
+          }
+          this.mediaRecorder = new MediaRecorder(stream, options)
           this.mediaRecorder.start()
 
           const audioChunks = []
