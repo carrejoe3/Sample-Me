@@ -18,9 +18,6 @@ export default {
     recordings () {
       return this.$store.state.recordedFiles
     },
-    recordMode () {
-      return this.$store.state.recordMode
-    },
     selectedColour () {
       return this.$store.state.selectedColour
     },
