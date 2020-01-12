@@ -45,6 +45,8 @@
 <script>
 
 import WaveSurfer from 'wavesurfer.js'
+import { Plugins, registerWebPlugin } from '@capacitor/core'
+import { FileSharer } from '@byteowls/capacitor-filesharer'
 
 export default {
   name: 'Files',
@@ -195,10 +197,19 @@ export default {
       }
     },
     shareFile () {
-      console.log('share meeeee')
+      Plugins.FileSharer.share({
+        filename: this.files[this.selectedFileIndex].name + '.mp3',
+        base64Data: 'base64,' + this.files[this.selectedFileIndex].data,
+        contentType: 'audio/mpeg'
+      }).then(() => {
+        // do sth
+      }).catch(error => {
+        console.error('File sharing failed', error.message)
+      })
     }
   },
   mounted () {
+    registerWebPlugin(FileSharer)
     this.buildWavSurfer()
     if (this.files.length > 0) {
       this.loadFile(0)
