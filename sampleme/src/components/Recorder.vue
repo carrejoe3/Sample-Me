@@ -1,6 +1,6 @@
 <template>
   <v-container class="recorder">
-    <v-btn large icon @click="isRecording ? stopRecord() : startRecord()" id="recordBtn">
+    <v-btn large icon @click="isRecording ? stopRecord() : startRecord()" id="recordBtn" :style="recorderStyles">
       <v-icon>mdi-microphone</v-icon>
     </v-btn>
     <div id="wavForm"></div>
@@ -27,9 +27,7 @@ export default {
       return this.$store.state.selectedColour
     },
     recorderStyles () {
-      return {
-        'background-color': this.selectedColour
-      }
+      return this.isRecording ? { 'background-color': this.selectedColour } : { 'background-color': 'white' }
     }
   },
   methods: {
