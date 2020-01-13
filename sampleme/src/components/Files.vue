@@ -199,7 +199,7 @@ export default {
     shareFile () {
       Plugins.FileSharer.share({
         filename: this.files[this.selectedFileIndex].name + '.mp3',
-        base64Data: 'base64,' + this.files[this.selectedFileIndex].data,
+        base64Data: this.files[this.selectedFileIndex].data,
         contentType: 'audio/mpeg'
       }).then(() => {
         // do sth
