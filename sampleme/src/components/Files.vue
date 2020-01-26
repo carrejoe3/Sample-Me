@@ -104,6 +104,9 @@ export default {
     },
     normalise () {
       return this.$store.state.normalise
+    },
+    skipLength () {
+      return this.$store.state.skipLength
     }
   },
   methods: {
@@ -144,6 +147,7 @@ export default {
         audioRate: 1,
         barWidth: 1,
         interact: true,
+        skipLength: this.skipLength,
         responsive: true,
         normalise: this.normalise
       })

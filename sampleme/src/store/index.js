@@ -13,7 +13,8 @@ export default new Vuex.Store({
     recordedFiles: [],
     selectedColour: 'red',
     normalise: false,
-    bitRate: 128000
+    bitRate: 128000,
+    skipLength: 2
   },
   mutations: {
     addFile (state, newFile) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     },
     updateBitRate (state, bitRate) {
       state.bitRate = bitRate
+    },
+    updateSkipLength (state, length) {
+      state.skipLength = Math.ceil(length)
     }
   },
   getters: {
