@@ -3,6 +3,7 @@
     <v-btn large icon @click="isRecording ? stopRecord() : startRecord()" id="recordBtn" :style="recorderStyles">
       <v-icon>mdi-microphone</v-icon>
     </v-btn>
+    <div id="timer">{{ timer }}</div>
     <div id="wavForm"></div>
   </v-container>
 </template>
@@ -17,7 +18,10 @@ export default {
   data: () => ({
     waveSurfer: null,
     mediaRecorder: null,
-    isRecording: 0
+    isRecording: 0,
+    timer: 0.00,
+    timerIsRunning: false,
+    interval: null
   }),
   computed: {
     recordings () {
@@ -97,6 +101,17 @@ export default {
       })
 
       this.waveSurfer.microphone.start()
+    },
+    toggleTimer () {
+      if (this.timerIsRunning) {
+        clearInterval(this.interval)
+      } else {
+        this.interval = setInterval(this.incrementTime, 1000)
+      }
+      this.timerIsRunning = !this.timerIsRunning
+    },
+    incrementTime () {
+      this.timer = parseInt(this.time) + 0.01
     }
   },
   mounted () {
@@ -112,9 +127,12 @@ export default {
 .recorder {
   text-align: center;
   #recordBtn {
-    margin: 15% 0%;
+    margin: 12% 0% 7% 0%;
     height: 30vh;
     width: 30vh;
+  }
+  #timer {
+    margin: 0% 0% 7% 0%;
   }
 }
 </style>
