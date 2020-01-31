@@ -107,6 +107,9 @@ export default {
     },
     skipLength () {
       return this.$store.state.skipLength
+    },
+    audioRate () {
+      return this.$store.state.audioRate
     }
   },
   methods: {
@@ -144,12 +147,12 @@ export default {
         barHeight: 20,
         barRadius: 3,
         hideScrollbar: true,
-        audioRate: 1,
         barWidth: 1,
         interact: true,
         skipLength: this.skipLength,
         responsive: true,
-        normalise: this.normalise
+        normalise: this.normalise,
+        audioRate: this.audioRate
       })
 
       this.waveSurfer.on('finish', () => {
