@@ -8,7 +8,7 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-list id="fileList" class="overflow-y-auto" v-if="files.length > 0">
+    <v-list id="fileList" v-if="files.length > 0">
       <v-list-item v-for='(file, index) in files' :key='index' class='file'>
         <v-list-item-content @click='loadFile(index)'>
           <v-list-item-title>{{ file.name }}</v-list-item-title>
@@ -230,7 +230,8 @@ export default {
   justify-content: space-around;
 }
 #fileList {
-  max-height: 65vh;
+  overflow-x: auto;
+  max-height: calc(100vh - 56px - 128px - 56px - 20px);
 }
 #editPanelBtns {
   display: flex;
