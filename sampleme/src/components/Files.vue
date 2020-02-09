@@ -1,6 +1,15 @@
 <template>
   <v-container>
-    <div id='wavForm'></div>
+    <v-list-item>
+      <v-list-item-icon>
+        <v-icon>mdi-library-music</v-icon>
+      </v-list-item-icon>
+      <v-list-item-content>
+        <v-list-item-title class="headline">No files found</v-list-item-title>
+        <v-list-item-subtitle>Your recordings will show up here</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+    <div id='wavForm' v-if="files.length > 0"></div>
     <v-toolbar color='elevation-0' v-if="files.length > 0">
       <v-toolbar-items id="audioControls" v-for='(button, index) in audioControlButtons' :key='index'>
         <v-btn @click="button.method" icon x-large :disabled="button.disabled">
