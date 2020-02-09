@@ -5,15 +5,15 @@
       <v-bottom-navigation grow>
         <v-btn to="/" ripple icon>
           <span>Recorder</span>
-          <v-icon>mdi-microphone</v-icon>
+          <v-icon :color="selectedColour">mdi-microphone</v-icon>
         </v-btn>
         <v-btn to="/files" ripple icon>
           <span>Files</span>
-          <v-icon>mdi-file-cabinet</v-icon>
+          <v-icon :color="selectedColour">mdi-file-cabinet</v-icon>
         </v-btn>
         <v-btn to="/settings" ripple icon>
           <span>Settings</span>
-          <v-icon>mdi-settings</v-icon>
+          <v-icon :color="selectedColour">mdi-settings</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-content>
@@ -22,7 +22,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    selectedColour () {
+      return this.$store.state.selectedColour
+    }
+  }
 }
 </script>
 

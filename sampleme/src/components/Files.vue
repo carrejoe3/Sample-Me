@@ -2,7 +2,7 @@
   <v-container>
     <v-list-item>
       <v-list-item-icon>
-        <v-icon>mdi-library-music</v-icon>
+        <v-icon :color="selectedColour">mdi-library-music</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title class="headline">No files found</v-list-item-title>
