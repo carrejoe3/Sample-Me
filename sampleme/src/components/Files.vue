@@ -227,9 +227,7 @@ export default {
   mounted () {
     registerWebPlugin(FileSharer)
     this.buildWavSurfer()
-    if (this.files.length > 0) {
-      this.loadFile(0)
-    }
+    if (this.files.length > 0) this.loadFile(0)
   }
 }
 </script>
