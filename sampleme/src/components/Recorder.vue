@@ -17,7 +17,8 @@ export default {
   data: () => ({
     waveSurfer: null,
     mediaRecorder: null,
-    isRecording: 0
+    isRecording: 0,
+    waveSurferIsBuilt: false
   }),
   computed: {
     recordings () {
@@ -38,6 +39,8 @@ export default {
   },
   methods: {
     startRecord () {
+      if (!this.waveSurferIsBuilt) this.buildWavSurfer()
+      this.waveSurfer.microphone.start()
       this.isRecording = true
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
@@ -60,6 +63,7 @@ export default {
         })
     },
     stopRecord () {
+      this.waveSurfer.microphone.stop()
       this.isRecording = false
       this.mediaRecorder.stop()
     },
@@ -95,12 +99,7 @@ export default {
           MicrophonePlugin.create()
         ]
       })
-
-      this.waveSurfer.microphone.start()
     }
-  },
-  mounted () {
-    this.buildWavSurfer()
   },
   beforeDestroy () {
     if (this.isRecording) this.stopRecord()
