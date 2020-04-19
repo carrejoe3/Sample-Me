@@ -13,7 +13,7 @@
         </v-btn>
         <v-btn to="/settings" ripple icon>
           <span>Settings</span>
-          <v-icon :color="selectedColour">mdi-settings</v-icon>
+          <v-icon :color="selectedColour">mdi-cog</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-content>
