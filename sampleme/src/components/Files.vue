@@ -152,18 +152,8 @@ export default {
         this.buildWavSurfer()
       }
 
-      // Load the blob and start playback when ready
+      // Load the blob; do not auto-play. Playback controlled by play/pause button.
       this.waveSurfer.loadBlob(blob)
-      this.waveSurfer.once('ready', () => {
-        try {
-          this.waveSurfer.play()
-          const playBtn = this.audioControlButtons.find(btn => btn.id === 'playPause')
-          if (playBtn) playBtn.icon = 'mdi-pause'
-        } catch (e) {
-          // ignore playback errors
-          console.error('Playback failed', e && e.message)
-        }
-      })
     },
     buildWavSurfer () {
       this.waveSurfer = WaveSurfer.create({
