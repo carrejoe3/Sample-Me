@@ -58,7 +58,7 @@ import { Plugins, registerWebPlugin } from '@capacitor/core'
 import { FileSharer } from '@byteowls/capacitor-filesharer'
 
 export default {
-  name: 'Files',
+  name: 'SampleFiles',
   data () {
     return {
       waveSurfer: null,
@@ -143,8 +143,8 @@ export default {
         prevFileBtn.disabled = false
       }
 
-      let binary = this.convertToBinary(this.files[index].data)
-      let blob = new Blob([binary], {
+      const binary = this.convertToBinary(this.files[index].data)
+      const blob = new Blob([binary], {
         type: 'audio/ogg'
       })
       this.waveSurfer.loadBlob(blob)
@@ -169,10 +169,10 @@ export default {
       })
     },
     convertToBinary (base64) {
-      let raw = window.atob(base64)
-      let arr = new Uint8Array(new ArrayBuffer(raw.length))
+      const raw = window.atob(base64)
+      const arr = new Uint8Array(new ArrayBuffer(raw.length))
 
-      for (let i in arr) {
+      for (const i in arr) {
         arr[i] = raw.charCodeAt(i)
       }
 

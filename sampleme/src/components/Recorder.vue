@@ -13,7 +13,7 @@ import WaveSurfer from 'wavesurfer.js'
 import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js'
 
 export default {
-  name: 'Recorder',
+  name: 'SampleRecorder',
   data: () => ({
     waveSurfer: null,
     mediaRecorder: null,
@@ -73,8 +73,8 @@ export default {
     convertBlobToText (blob) {
       const reader = new FileReader()
       reader.onload = () => {
-        let dataUrl = reader.result
-        let base64 = dataUrl.split(',')[1]
+        const dataUrl = reader.result
+        const base64 = dataUrl.split(',')[1]
         this.$store.commit('addFile', {
           name: 'Recording ' + (this.recordings.length + 1),
           data: base64,

@@ -9,7 +9,7 @@
 import Recorder from '@/components/Recorder.vue'
 
 export default {
-  name: 'Recorderpage',
+  name: 'RecorderPage',
   components: {
     Recorder
   }

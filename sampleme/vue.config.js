@@ -1,6 +1,7 @@
 module.exports = {
-  'transpileDependencies': [
+  transpileDependencies: [
     'vuetify',
     'vuex-persist'
-  ]
+  ],
+  lintOnSave: false
 }
