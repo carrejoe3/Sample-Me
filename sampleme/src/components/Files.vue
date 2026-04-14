@@ -147,7 +147,23 @@ export default {
       const blob = new Blob([binary], {
         type: 'audio/ogg'
       })
+      // ensure wavesurfer instance exists
+      if (!this.waveSurfer) {
+        this.buildWavSurfer()
+      }
+
+      // Load the blob and start playback when ready
       this.waveSurfer.loadBlob(blob)
+      this.waveSurfer.once('ready', () => {
+        try {
+          this.waveSurfer.play()
+          const playBtn = this.audioControlButtons.find(btn => btn.id === 'playPause')
+          if (playBtn) playBtn.icon = 'mdi-pause'
+        } catch (e) {
+          // ignore playback errors
+          console.error('Playback failed', e && e.message)
+        }
+      })
     },
     buildWavSurfer () {
       this.waveSurfer = WaveSurfer.create({
@@ -228,8 +244,9 @@ export default {
     registerWebPlugin(FileSharer)
 
     if (this.files.length > 0) {
-      this.loadFile(0)
+      // build the WaveSurfer instance first, then load the file
       this.buildWavSurfer()
+      this.loadFile(0)
     }
   }
 }
