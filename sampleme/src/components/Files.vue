@@ -264,4 +264,9 @@ export default {
   display: flex;
   justify-content: space-around;
 }
+/* show hand cursor for clickable recording items */
+#fileList .file,
+#fileList .file .v-list-item-content {
+  cursor: pointer;
+}
 </style>
