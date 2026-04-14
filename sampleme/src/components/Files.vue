@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-list-item>
+    <v-list-item v-if="!files || files.length === 0">
       <v-list-item-icon>
         <v-icon :color="selectedColour">mdi-music</v-icon>
       </v-list-item-icon>
